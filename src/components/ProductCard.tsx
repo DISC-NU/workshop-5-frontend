@@ -1,4 +1,6 @@
 import { Product } from "../types/Product";
+import { useNavigate } from "react-router-dom";
+import "../styles/styles.css";
 
 interface ProductCardProps {
   product: Product;
@@ -11,28 +13,41 @@ export const ProductCard = ({
   onDelete,
   onEdit,
 }: ProductCardProps) => {
+  const navigate = useNavigate();
+
+  const handleCardClick = (e: React.MouseEvent) => {
+    if ((e.target as HTMLElement).closest(".button-group")) {
+      return;
+    }
+    navigate(`/products/${product.id}`);
+  };
+
+  const handleDelete = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onDelete(product.id);
+  };
+
+  const handleEdit = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onEdit(product);
+  };
+
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden">
-      <div className="p-4">
-        <h3 className="text-xl font-bold mb-2 truncate">{product.name}</h3>
+    <div className="product-card" onClick={handleCardClick}>
+      <div className="product-content">
+        <h3 className="product-title">{product.name}</h3>
         <img
           src={product.image_url}
           alt={product.name}
-          className="w-full h-48 object-cover rounded-md mb-4"
+          className="product-image"
         />
-        <p className="text-lg font-bold mb-2">${product.price.toFixed(2)}</p>
-        <p className="text-gray-600 mb-4">{product.description}</p>
-        <div className="flex space-x-2">
-          <button
-            onClick={() => onEdit(product)}
-            className="flex-1 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-md transition-colors"
-          >
+        <p className="product-price">${product.price.toFixed(2)}</p>
+        <p className="product-description">{product.description}</p>
+        <div className="button-group">
+          <button onClick={handleEdit} className="button button-secondary">
             Edit
           </button>
-          <button
-            onClick={() => onDelete(product.id)}
-            className="flex-1 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-md transition-colors"
-          >
+          <button onClick={handleDelete} className="button button-danger">
             Delete
           </button>
         </div>

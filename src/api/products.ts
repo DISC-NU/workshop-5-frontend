@@ -35,3 +35,9 @@ export const deleteProduct = async (id: string): Promise<void> => {
   });
   if (!response.ok) throw new Error("Failed to delete product");
 };
+
+export const getProductById = async (id: string): Promise<Product> => {
+  const response = await fetch(`${API_BASE_URL}/${id}`);
+  if (!response.ok) throw new Error("Failed to fetch product");
+  return response.json();
+};

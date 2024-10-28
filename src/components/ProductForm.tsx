@@ -1,6 +1,8 @@
 import React from "react";
 import { useState } from "react";
 import { Product } from "../types/Product";
+import "../styles/styles.css";
+
 interface ProductFormProps {
   onSubmit: (formData: FormData) => Promise<void>;
   initialData?: Product;
@@ -46,21 +48,21 @@ export const ProductForm = ({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 w-full max-w-lg">
-      <h2 className="text-2xl font-bold mb-6">{buttonText} Product</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
+    <div className="form-container">
+      <h2 className="form-title">{buttonText} Product</h2>
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
           <input
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="input"
             placeholder="Product Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
           />
         </div>
-        <div>
+        <div className="form-group">
           <input
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="input"
             type="number"
             step="0.01"
             placeholder="Price"
@@ -69,19 +71,18 @@ export const ProductForm = ({
             required
           />
         </div>
-        <div>
+        <div className="form-group">
           <textarea
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="textarea"
             placeholder="Description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             required
-            rows={4}
           />
         </div>
-        <div>
+        <div className="form-group">
           <input
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="input"
             type="file"
             accept="image/*"
             onChange={(e) => setImage(e.target.files?.[0] || null)}
@@ -91,11 +92,7 @@ export const ProductForm = ({
         <button
           type="submit"
           disabled={loading}
-          className={`w-full py-2 px-4 rounded-md text-white font-medium ${
-            loading
-              ? "bg-blue-400 cursor-not-allowed"
-              : "bg-blue-600 hover:bg-blue-700"
-          }`}
+          className={`button button-primary ${loading ? "disabled" : ""}`}
         >
           {loading ? "Loading..." : buttonText}
         </button>
