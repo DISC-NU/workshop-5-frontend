@@ -1,6 +1,6 @@
 import { Product } from "../types/Product";
 
-const API_BASE_URL = "http://localhost:8000/api/products";
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "";
 
 export const fetchProducts = async (): Promise<Product[]> => {
   const response = await fetch(API_BASE_URL);
